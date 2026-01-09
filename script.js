@@ -21,10 +21,15 @@ function addTask() {
 
     if (editIndex === null) {
         // Add new task
-        tasks.push({ text, dueDate, priority });
+        tasks.push({ text, dueDate, priority, completed: false });
     } else {
         // Update existing task
-        tasks[editIndex] = { text, dueDate, priority };
+        tasks[editIndex] = {
+            ...tasks[editIndex],
+            text,
+            dueDate,
+            priority
+        };
         editIndex = null;
         document.querySelector("button").textContent = "Add Task";
     }
@@ -49,10 +54,18 @@ function displayTasks() {
 
     tasks.forEach((task, index) => {
         let div = document.createElement("div");
-        div.className = "task " + (task.priority === "high" ? "high" : "");
+
+        div.className = "task " +
+            (task.priority === "high" ? "high " : "") +
+            (task.completed ? "completed" : "");
 
         div.innerHTML = `
+      <input type="checkbox"
+        ${task.completed ? "checked" : ""}
+        onclick="toggleComplete(${index})">
+
       <span>${task.text} (${task.dueDate || "no date"})</span>
+
       <div>
         <button onclick="editTask(${index})">✏️</button>
         <button onclick="deleteTask(${index})">🗑️</button>
@@ -62,6 +75,7 @@ function displayTasks() {
         taskList.appendChild(div);
     });
 }
+
 
 
 function checkReminders() {
@@ -97,6 +111,11 @@ function editTask(index) {
 
     editIndex = index;
     document.querySelector("button").textContent = "Update Task";
+}
+function toggleComplete(index) {
+    tasks[index].completed = !tasks[index].completed;
+    saveTasks();
+    displayTasks();
 }
 
 displayTasks();

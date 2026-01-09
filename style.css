@@ -92,3 +92,58 @@ button:hover {
         transform: translateY(0);
     }
 }
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+body.dark header {
+    background: #1f1f1f;
+}
+
+body.dark input,
+body.dark select {
+    background: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+body.dark button {
+    background: #bb2d3b;
+}
+
+body.dark .task {
+    background: #1e1e1e;
+    box-shadow: none;
+}
+
+body.dark .task.high {
+    border-left: 6px solid #ff4d4d;
+}
+
+body.dark #notification.normal {
+    background: #333;
+    color: white;
+}
+
+body.dark #notification.high {
+    background: #b02a37;
+}
+
+.task.completed span {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task.completed {
+    background: #e0e0e0;
+}
+
+body.dark .task.completed {
+    background: #2a2a2a;
+}
