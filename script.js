@@ -6,6 +6,16 @@ let dueDateInput = document.getElementById("dueDate");
 let notification = document.getElementById("notification");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+// Ask permission to send notifications
+if ('Notification' in window) {
+    Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+            console.log("Notifications enabled ✅");
+        } else {
+            console.log("Notifications blocked ❌");
+        }
+    });
+}
 
 /* ---------- SAVE TASKS ---------- */
 function saveTasks() {
@@ -65,12 +75,11 @@ addButton.onclick = function () {
     dueDateInput.value = "";
 };
 
-/* ---------- ON-SCREEN REMINDER (ONCE PER DAY) ---------- */
 function checkReminders() {
     let today = new Date().toISOString().split("T")[0];
     let lastReminderDate = localStorage.getItem("lastReminderDate");
 
-    if (lastReminderDate === today) return;
+    if (lastReminderDate === today) return; // Only once per day
 
     let overdueTasks = [];
     let hasHighPriority = false;
@@ -86,10 +95,17 @@ function checkReminders() {
 
     if (overdueTasks.length === 0) return;
 
+    // Show notification in browser / PWA
+    if (Notification.permission === "granted") {
+        let notificationText = (hasHighPriority ? "⚠️ High Priority Overdue: " : "⏰ Overdue: ")
+            + overdueTasks.join(", ");
+        new Notification("To-Do Reminder", { body: notificationText });
+    }
+
+    // Also show top bar inside app
     notification.textContent =
         (hasHighPriority ? "⚠️ Overdue High Priority Tasks: " : "⏰ Overdue Tasks: ")
         + overdueTasks.join(", ");
-
     notification.className = hasHighPriority ? "high" : "normal";
     notification.style.display = "block";
 
@@ -99,6 +115,11 @@ function checkReminders() {
         notification.style.display = "none";
     }, 10000);
 }
+// Run reminder when app loads
+checkReminders();
+
+// Optional: re-check every hour while app is open
+setInterval(checkReminders, 1000 * 60 * 60); // every 1 hour
 
 renderTasks();
 checkReminders();
