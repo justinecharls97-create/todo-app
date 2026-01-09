@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f8ff;
+    margin-top: 50px;
+}
+
+input,
+select,
+button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px;
+}
+
+li {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+li span.high {
+    color: red;
+    font-weight: bold;
+}
+
+li span.normal {
+    color: green;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+li button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+li button:hover {
+    background-color: #c0392b;
+}
+
+#notification {
+    display: block;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#notification.normal {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+#notification.high {
+    background-color: #f8d7da;
+    color: #721c24;
+}
