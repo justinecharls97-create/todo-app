@@ -1,40 +1,18 @@
-const cacheName = 'todo-app-cache-v1';
-const filesToCache = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/script.js',
-    '/manifest.json',
-    '/icon.png'
+const cacheName = "todo-cache-v1";
+const files = [
+    "/",
+    "/index.html",
+    "/style.css",
+    "/script.js",
+    "/manifest.json"
 ];
 
-// Install service worker
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(cacheName)
-            .then(cache => {
-                return cache.addAll(filesToCache);
-            })
-    );
+self.addEventListener("install", e => {
+    e.waitUntil(caches.open(cacheName).then(c => c.addAll(files)));
 });
 
-// Activate service worker
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(keys => {
-            return Promise.all(
-                keys.filter(key => key !== cacheName)
-                    .map(key => caches.delete(key))
-            );
-        })
-    );
-});
-
-// Fetch requests
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request).then(response => {
-            return response || fetch(event.request);
-        })
+self.addEventListener("fetch", e => {
+    e.respondWith(
+        caches.match(e.request).then(res => res || fetch(e.request))
     );
 });
