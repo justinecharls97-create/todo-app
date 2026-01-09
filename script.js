@@ -1,6 +1,7 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let taskList = document.getElementById("taskList");
 let notification = document.getElementById("notification");
+let editIndex = null;
 
 /* Notification permission */
 if ("Notification" in window) {
@@ -18,12 +19,24 @@ function addTask() {
 
     if (!text) return alert("Enter a task");
 
-    tasks.push({ text, dueDate, priority });
+    if (editIndex === null) {
+        // Add new task
+        tasks.push({ text, dueDate, priority });
+    } else {
+        // Update existing task
+        tasks[editIndex] = { text, dueDate, priority };
+        editIndex = null;
+        document.querySelector("button").textContent = "Add Task";
+    }
+
     saveTasks();
     displayTasks();
 
     document.getElementById("taskInput").value = "";
+    document.getElementById("dueDate").value = "";
+    document.getElementById("priority").value = "normal";
 }
+
 
 function deleteTask(index) {
     tasks.splice(index, 1);
@@ -40,12 +53,16 @@ function displayTasks() {
 
         div.innerHTML = `
       <span>${task.text} (${task.dueDate || "no date"})</span>
-      <button onclick="deleteTask(${index})">Delete</button>
+      <div>
+        <button onclick="editTask(${index})">✏️</button>
+        <button onclick="deleteTask(${index})">🗑️</button>
+      </div>
     `;
 
         taskList.appendChild(div);
     });
 }
+
 
 function checkReminders() {
     let today = new Date().toISOString().split("T")[0];
@@ -70,6 +87,16 @@ function checkReminders() {
     setTimeout(() => notification.style.display = "none", 10000);
 
     localStorage.setItem("lastReminderDate", today);
+}
+function editTask(index) {
+    let task = tasks[index];
+
+    document.getElementById("taskInput").value = task.text;
+    document.getElementById("dueDate").value = task.dueDate;
+    document.getElementById("priority").value = task.priority;
+
+    editIndex = index;
+    document.querySelector("button").textContent = "Update Task";
 }
 
 displayTasks();
