@@ -12,6 +12,15 @@ header {
     font-size: 1.5em;
 }
 
+header button {
+    float: right;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
 main {
     padding: 20px;
 }
@@ -32,10 +41,32 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
     background: #c82333;
+}
+
+#filters {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+#filters button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: 0.3s;
+}
+
+#filters button:hover {
+    background: #dc3545;
+    color: white;
 }
 
 .task {
@@ -47,12 +78,20 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     animation: fadeIn 0.4s forwards;
 }
 
 .task.high {
     border-left: 6px solid #dc3545;
+}
+
+.task.completed span {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task.completed {
+    background: #e0e0e0;
 }
 
 .task button {
@@ -69,6 +108,7 @@ button:hover {
     text-align: center;
     font-weight: bold;
     z-index: 999;
+    border-radius: 0 0 10px 10px;
 }
 
 #notification.high {
@@ -96,7 +136,6 @@ button:hover {
 /* =========================
    DARK MODE
 ========================= */
-
 body.dark {
     background: #121212;
     color: #e0e0e0;
@@ -126,6 +165,10 @@ body.dark .task.high {
     border-left: 6px solid #ff4d4d;
 }
 
+body.dark .task.completed {
+    background: #2a2a2a;
+}
+
 body.dark #notification.normal {
     background: #333;
     color: white;
@@ -133,17 +176,4 @@ body.dark #notification.normal {
 
 body.dark #notification.high {
     background: #b02a37;
-}
-
-.task.completed span {
-    text-decoration: line-through;
-    opacity: 0.6;
-}
-
-.task.completed {
-    background: #e0e0e0;
-}
-
-body.dark .task.completed {
-    background: #2a2a2a;
 }

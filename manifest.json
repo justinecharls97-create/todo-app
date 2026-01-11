@@ -1,6 +1,6 @@
 {
-    "name": "My To-Do App",
-    "short_name": "To-Do",
+    "name": "My Check-List",
+    "short_name": "Do-List",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#ffffff",

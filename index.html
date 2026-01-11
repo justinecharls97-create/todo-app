@@ -12,18 +12,29 @@
 
 <body>
 
-    <header>📋 My To-Do App</header>
+    <header>
+        📋 My To-Do App
+        <button id="darkToggle">🌙</button>
+    </header>
 
     <div id="notification"></div>
 
     <main>
         <input type="text" id="taskInput" placeholder="Enter task">
         <input type="date" id="dueDate">
+        <input type="time" id="reminderTime">
         <select id="priority">
             <option value="normal">Normal</option>
             <option value="high">High</option>
         </select>
         <button onclick="addTask()">Add Task</button>
+
+        <div id="filters">
+            <button onclick="filterTasks('all')">All</button>
+            <button onclick="filterTasks('active')">Active</button>
+            <button onclick="filterTasks('completed')">Completed</button>
+            <button onclick="filterTasks('high')">High Priority</button>
+        </div>
 
         <div id="taskList"></div>
     </main>
@@ -36,7 +47,6 @@
             navigator.serviceWorker.register('service-worker.js');
         }
     </script>
-    <img src="icon.png" alt="App Icon" width="100">
 
 </body>
 
